@@ -1,7 +1,7 @@
 defmodule Phoenix.MixProject do
   use Mix.Project
 
-  @version "1.4.9"
+  @version "1.4.9-1"
 
   def project do
     [
@@ -12,7 +12,7 @@ defmodule Phoenix.MixProject do
       package: package(),
       lockfile: lockfile(),
       preferred_cli_env: [docs: :docs],
-      consolidate_protocols: Mix.env != :test,
+      consolidate_protocols: Mix.env() != :test,
       xref: [
         exclude: [
           Phoenix.HTML.Safe,
@@ -24,7 +24,7 @@ defmodule Phoenix.MixProject do
           Plug.Cowboy
         ]
       ],
-      elixirc_paths: elixirc_paths(Mix.env),
+      elixirc_paths: elixirc_paths(Mix.env()),
       name: "Phoenix",
       docs: docs(),
       aliases: aliases(),
@@ -84,13 +84,19 @@ defmodule Phoenix.MixProject do
   defp package do
     [
       maintainers: [
-        "Chris McCord", "José Valim", "Lance Halvorsen", "Gary Rennie",
-        "Jason Stiebs", "Eric Meadows-Jönsson", "Sonny Scroggin"
+        "Chris McCord",
+        "José Valim",
+        "Lance Halvorsen",
+        "Gary Rennie",
+        "Jason Stiebs",
+        "Eric Meadows-Jönsson",
+        "Sonny Scroggin"
       ],
       licenses: ["MIT"],
       links: %{github: "https://github.com/phoenixframework/phoenix"},
-      files: ~w(assets lib priv) ++
-        ~w(CHANGELOG.md LICENSE.md mix.exs package.json README.md .formatter.exs)
+      files:
+        ~w(assets lib priv) ++
+          ~w(CHANGELOG.md LICENSE.md mix.exs package.json README.md .formatter.exs)
     ]
   end
 
@@ -114,7 +120,6 @@ defmodule Phoenix.MixProject do
       "guides/introduction/installation.md",
       "guides/introduction/learning.md",
       "guides/introduction/community.md",
-
       "guides/up_and_running.md",
       "guides/adding_pages.md",
       "guides/routing.md",
@@ -129,23 +134,21 @@ defmodule Phoenix.MixProject do
       "guides/contexts.md",
       "guides/phoenix_mix_tasks.md",
       "guides/errors.md",
-
       "guides/testing/testing.md",
       "guides/testing/testing_schemas.md",
       "guides/testing/testing_controllers.md",
       "guides/testing/testing_channels.md",
-
       "guides/deployment/deployment.md",
       "guides/deployment/heroku.md"
-      ]
+    ]
   end
 
   defp groups_for_extras do
     [
-      "Introduction": ~r/guides\/introduction\/.?/,
-      "Guides": ~r/guides\/[^\/]+\.md/,
-      "Testing": ~r/guides\/testing\/.?/,
-      "Deployment": ~r/guides\/deployment\/.?/
+      Introduction: ~r/guides\/introduction\/.?/,
+      Guides: ~r/guides\/[^\/]+\.md/,
+      Testing: ~r/guides\/testing\/.?/,
+      Deployment: ~r/guides\/deployment\/.?/
     ]
   end
 
@@ -165,17 +168,15 @@ defmodule Phoenix.MixProject do
     # Phoenix.View
 
     [
-      "Testing": [
+      Testing: [
         Phoenix.ChannelTest,
-        Phoenix.ConnTest,
+        Phoenix.ConnTest
       ],
-
       "Adapters and Plugs": [
         Phoenix.CodeReloader,
         Phoenix.Endpoint.CowboyAdapter,
         Phoenix.Endpoint.Cowboy2Adapter
       ],
-
       "Socket and Transport": [
         Phoenix.Socket,
         Phoenix.Socket.Broadcast,
@@ -184,14 +185,13 @@ defmodule Phoenix.MixProject do
         Phoenix.Socket.Serializer,
         Phoenix.Socket.Transport
       ],
-
-      "Templating": [
+      Templating: [
         Phoenix.Template,
         Phoenix.Template.EExEngine,
         Phoenix.Template.Engine,
         Phoenix.Template.ExsEngine,
-        Phoenix.Template.HTML,
-      ],
+        Phoenix.Template.HTML
+      ]
     ]
   end
 
@@ -202,7 +202,7 @@ defmodule Phoenix.MixProject do
   end
 
   def generate_js_docs(_) do
-    Mix.Task.run "app.start"
+    Mix.Task.run("app.start")
     System.cmd("npm", ["run", "docs"], cd: "assets")
   end
 end
